@@ -1,0 +1,44 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Trigger workflow manually (optional)
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # This uses an Ubuntu-based runner
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # Checkout your code from the repository
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'  # You can change this to the version you need
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+
+    - name: Install dependencies
+      run: |
+        poetry install  # Install project dependencies using Poetry
+
+    - name: Run Tests
+      run: |
+        poetry run pytest  # Run the tests using Poetry's virtual environment
+
+    - name: Upload Test Results (optional)
+      if: failure()  # Upload test results if the tests fail
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test-results/

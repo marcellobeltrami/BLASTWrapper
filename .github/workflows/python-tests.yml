@@ -7,21 +7,20 @@ on:
   pull_request:
     branches:
       - main
-  # Trigger workflow manually (optional)
   workflow_dispatch:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # This uses an Ubuntu-based runner
+    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Checkout your code from the repository
+      uses: actions/checkout@v3  # Check out the code from the repository
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # You can change this to the version you need
+        python-version: '3.10'  # Adjust this based on your Python version
 
     - name: Install Poetry
       run: |
@@ -34,11 +33,11 @@ jobs:
 
     - name: Run Tests
       run: |
-        poetry run pytest  # Run the tests using Poetry's virtual environment
+        poetry run pytest  # Run tests with pytest inside the Poetry virtual environment
 
     - name: Upload Test Results (optional)
-      if: failure()  # Upload test results if the tests fail
+      if: failure()  # Only upload results if the tests fail
       uses: actions/upload-artifact@v3
       with:
         name: test-results
-        path: test-results/
+        path: test-results/  # Adjust the path to your test results directory if needed

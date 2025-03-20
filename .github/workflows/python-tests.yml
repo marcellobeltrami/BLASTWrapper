@@ -7,20 +7,20 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch:  # Optional, allows manual trigger from GitHub UI
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest  # Use an Ubuntu runner
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3  # Check out the code from the repository
+      uses: actions/checkout@v3  # Check out your repository code
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'  # Adjust this based on your Python version
+        python-version: '3.10'  # Adjust the version as per your requirement
 
     - name: Install Poetry
       run: |
@@ -29,15 +29,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        poetry install  # Install project dependencies using Poetry
+        poetry install  # Install dependencies defined in pyproject.toml
 
-    - name: Run Tests
+    - name: Run Tests with JUnit XML output
       run: |
-        poetry run pytest  # Run tests with pytest inside the Poetry virtual environment
+        poetry run pytest --maxfail=1 --disable-warnings --junitxml=test-results/test-results.xml  # Output test results to XML
 
-    - name: Upload Test Results (optional)
-      if: failure()  # Only upload results if the tests fail
-      uses: actions/upload-artifact@v3
+    - name: Upload Test Results
+      if: failure()  # Upload test results only if the tests fail
+      uses: actions/upload-artifact@v2  # Correct version to use
       with:
         name: test-results
-        path: test-results/  # Adjust the path to your test results directory if needed
+        path: test-results/test-results.xml  # Path to the test result XML file

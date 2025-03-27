@@ -10,7 +10,9 @@
 
 ## Installation
 
-You can install `blastwrapper` via **Poetry** or **pip** (if published to PyPI in the future).
+You can install `blastwrapper` via **Poetry** or **pip**.
+
+See package on PyPI https://pypi.org/project/blastwrapper/0.1.0/
 
 ### Using Poetry
 1. Install Poetry if you haven't already:  

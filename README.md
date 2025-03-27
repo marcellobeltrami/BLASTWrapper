@@ -2,6 +2,7 @@
 
 `BlastWrapper` is a Python package designed to interact with the **BLAST (Basic Local Alignment Search Tool)** API provided by NCBI. It allows users to submit, check the status of, and retrieve results from BLAST queries using simple functions.
 
+
 ## Features
 - Submit a BLAST query with specific parameters (e.g., program, database).
 - Check the status of the BLAST query (whether it is still running or completed).
